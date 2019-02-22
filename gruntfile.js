@@ -56,6 +56,16 @@ module.exports = function(grunt) {
         }
       }
     },
+    imagemin: {
+      target: {
+        files: [{
+          expand: true,
+          cwd: 'img/',
+          src: ['**/*.{png,jpg,gif,jpeg}'],
+          dest: 'img/'
+        }]
+      }
+    },
     watch: {
       options: {
         livereload: true
@@ -67,6 +77,10 @@ module.exports = function(grunt) {
       sass: {
         files: ['scss/*.scss'],
         tasks: ['newer:sass:target']
+      },
+      imagemin: {
+        files: 'img/*.{png,jpg,gif,jpeg}',
+        tasks: ['newer:imagemin:target']
       },
       postcss: {
         files: ['css/*.css'],
@@ -80,5 +94,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-newer');
   grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.registerTask('default', ['uglify', 'sass', 'postcss','connect' ,'watch']);
+  grunt.loadNpmTasks('grunt-contrib-imagemin');
+  grunt.registerTask('default', ['uglify', 'sass', 'postcss','connect','watch']);
 };

@@ -17,29 +17,38 @@ $(function() {
     type: "GET",
     success: function(data) {
       var matches = data.values;
-      var week = data.values[0][2];
+      var week = data.values[0][4];
       $('#match-week').val(week);
+      $('.week').text(week);
       $.each(matches,function(i,obj) {
         var teamA = matches[i][0];
-        var teamB = matches[i][1];
+        var teamAlogo = matches[i][1];
+        var teamB = matches[i][2];
+        var teamBlogo = matches[i][3];
         var matchObj = {
           "team_A": teamA,
+          "team_A_logo": teamAlogo,
           "team_B": teamB,
+          "team_B_logo": teamBlogo,
           "matchId": matchIds[i]
         };
         matchArr.push(matchObj);
       });
       $.each(matchArr,function(i,obj) {
         var matchBlock = '<div class="match form-panel">'+
-                            '<div class="team-a team">'+matchArr[i].team_A+'</div>'+
+                            '<div class="matchup">'+matchArr[i].team_A+' vs. '+matchArr[i].team_B+'</div>'+
+                            '<div class="team-a team" data-team='+matchArr[i].team_A+'>'+
+                              '<div class="team-name">'+matchArr[i].team_A+'</div>'+
+                              '<div class="team-logo"><img src="https://cdn.jsdelivr.net/gh/chrisbowerbank/premier-league-predictions/img/'+matchArr[i].team_A_logo+'"></div>'+
+                            '</div>'+
                             '<div class="draw team">Draw</div>'+
-                            '<div class="team-b team">'+matchArr[i].team_B+'</div>'+
+                            '<div class="team-b team" data-team="">'+matchArr[i].team_B+'</div>'+
                             '<input type="hidden" name="'+matchArr[i].matchId+'" class="match-pick match-'+[i]+'">'+
                           '</div>';
         $('#match-form').prepend(matchBlock);
       });
-      $('.match').click(function() {
-        alert('match clicked');
+      $('.team').click(function() {
+
       });
       //form send
       var formID = '1tu32J-pGtFoLui7FNGetTK9CeCGC2AE8EOGbAoAggG0';
