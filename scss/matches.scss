@@ -1,0 +1,176 @@
+
+@mixin transition($prop...) {
+	transition-property: $prop;
+	transition-duration: 0.3s;
+	transition-timing-function: ease;
+}
+$black: #000;
+$white: #fff;
+$green: green;
+#match-form {
+  position: relative;
+	overflow: hidden;
+  &.review {
+    display: flex;
+    flex-flow: row wrap;
+		align-items: center;
+		.panel-counter {
+			display: none;
+		}
+    .form-panel {
+      width: 50%;
+			position: relative;
+			height: auto;
+			opacity: 1;
+			transform: none;
+      &.match {
+				//display: block;
+				.team,.draw {
+					//display: inline-block;
+					vertical-align: middle;
+				}
+        .team-logo, .draw {
+					height: 100px;
+					width: 100px;
+        }
+				.team-logo {
+					margin: auto;
+				}
+				.draw {
+					font-size: 1em;
+				}
+      }
+    }
+  }
+  .match {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    text-align: center;
+    .matchup {
+      width: 100%;
+      text-align: left;
+      text-transform: uppercase;
+    }
+    .team {
+      text-transform: uppercase;
+			@include transition(color);
+			.team-name {
+				padding: 1em;
+				position: relative;
+				&:before {
+					content: '';
+					background-color: green;
+					height: 100%;
+					top: 0;
+					left: 0;
+					width: 0%;
+					position: absolute;
+					z-index: -1;
+					@include transition(width);
+				}
+			}
+      .team-logo {
+        height: 200px;
+				position: relative;
+        img {
+          z-index: 2;
+          height: 100%;
+          width: auto;
+          display: block;
+          margin: auto;
+        }
+				&:before {
+					content: '';
+					position: absolute;
+					height: 100%;
+					width: 100%;
+					left: 0;
+					top: 0;
+					z-index: 2;
+					opacity: 0.5;
+					@include transition(opacity);
+					background-color: $white;
+				}
+      }
+      &.active {
+				color: #fff;
+				.team-name {
+					&:before {
+						width: 100%;
+					}
+				}
+				.team-logo {
+					&:before {
+						opacity: 0;
+					}
+
+				}
+
+      }
+      &.draw {
+        height: 150px;
+        width: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 2px solid #000;
+				margin: 0 1em;
+        span {
+          font-size: 2em;
+          font-weight: bold;
+          text-transform: uppercase;
+        }
+        &.active {
+          background-color: green;
+          color: white;
+          border-color: green;
+        }
+      }
+    }
+  }
+	.form-panel {
+		position: absolute;
+		opacity: 0;
+		height: 0;
+		transform: translateX(-100%);
+		@include transition(transform, opacity);
+		&.active {
+			position: relative;
+			opacity: 1;
+			height: auto;
+			transform: translateX(0%);
+		}
+	}
+}
+#match-form-embed {
+	.form-toggle {
+		display: flex;
+		width: 100%;
+		align-items: center;
+
+		.toggle-col {
+
+			&.right {
+				text-align: right;
+			}
+			.panel-counter {
+				display: inline-block;
+				text-align: center;
+			}
+		}
+
+	}
+	.btn {
+		border-radius: 3px;
+		border: 2px solid black;
+		display: inline-block;
+		text-align: center;
+		padding: 0.5em 1em;
+		font-weight: 700;
+		&:hover {
+			cursor: pointer;
+		}
+	}
+}
