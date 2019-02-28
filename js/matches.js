@@ -43,7 +43,7 @@ $(function() {
                               '<div class="team-name">'+matchArr[i].team_A+'</div>'+
                               '<div class="team-logo"><img src="https://cdn.jsdelivr.net/gh/chrisbowerbank/premier-league-predictions/img/'+matchArr[i].team_A_logo+'" /></div>'+
                             '</div>'+
-                            '<div class="draw team"><span>Draw</span></div>'+
+                            '<div class="draw team" data-team="draw"><span>Draw</span></div>'+
                             '<div class="team-a team" data-team='+matchArr[i].team_B+'>'+
                               '<div class="team-name">'+matchArr[i].team_B+'</div>'+
                               '<div class="team-logo"><img src="https://cdn.jsdelivr.net/gh/chrisbowerbank/premier-league-predictions/img/'+matchArr[i].team_B_logo+'" /></div>'+
@@ -55,6 +55,9 @@ $(function() {
       });
       $('.match:first').addClass('active');
       //pick winner
+      var totalPanels = $('.form-panel').length + 1;
+      var currentPanel = $('.form-panel.active').index() + 1;
+
       $('.team').click(function() {
         $(this).parents('.match').find('.team.active').removeClass('active');
         $(this).addClass('active');
@@ -63,36 +66,49 @@ $(function() {
         var $this = $(this);
         setTimeout(function(){
           $this.parents('.match').removeClass('active').next('.form-panel').addClass('active');
-          $('.current-panel').text($('.form-panel.active').index() + 1);
+          currentPanel = $('.form-panel.active').index() + 1;
+          $('.current-panel').text(currentPanel);
+          $('.progress-bar').width((currentPanel / totalPanels) * 100+'%');
         }, 1000);
       });
       //form navigation
-      $('.total-panels').text($('.form-panel').length);
-      $('.current-panel').text($('.form-panel.active').index() + 1);
+
+      $('.total-panels').text(totalPanels);
+      $('.current-panel').text(currentPanel);
       $('.prev-panel').click(function() {
         if ($('.form-panel.active').prev('.form-panel').length > 0) {
           $('.form-panel.active').removeClass('active').prev('.form-panel').addClass('active');
-          $('.current-panel').text($('.form-panel.active').index() + 1);
+          currentPanel = $('.form-panel.active').index() + 1;
+          $('.current-panel').text(currentPanel);
+          $('.progress-bar').width((currentPanel / totalPanels) * 100+'%');
+          if ($('.form-panel.active').next('.form-panel').length == 0) {
+            $('#match-form').removeClass('review');
+          }
         }
       });
 
       $('.next-panel').click(function() {
         if ($('.form-panel.active input').val() !== '' && $('.form-panel.active').next('.form-panel').length > 0) {
           $('.form-panel.active').removeClass('active').next('.form-panel').addClass('active');
-          $('.current-panel').text($('.form-panel.active').index() + 1);
+          currentPanel = $('.form-panel.active').index() + 1;
+          $('.current-panel').text(currentPanel);
+          $('.progress-bar').width((currentPanel / totalPanels) * 100+'%');
+
         } else if ($('.form-panel.active input').val() !== '' && $('.form-panel.active').next('.form-panel').length == 0) {
           $('.form-panel.active').removeClass('active');
           $('#match-form').addClass('review');
           $('.next-panel').addClass('submit-picks').text('Submit');
           $('.review-display').removeClass('hidden');
           $('.matchweek-display').addClass('hidden');
+          currentPanel = $('.form-panel.active').index() + 1;
+          $('.current-panel').text(totalPanels);
+          $('.progress-bar').width('100%');
           $('.submit-picks').click(function() {
             $('#match-form').submit();
           });
         }
       });
       //form send
-
       var formID = '1tu32J-pGtFoLui7FNGetTK9CeCGC2AE8EOGbAoAggG0';
       $('#match-form').submit(function(e) {
         e.preventDefault();
