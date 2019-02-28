@@ -49,15 +49,18 @@ $(function() {
       $.each(matchArr.reverse(),function(i,obj) {
         var matchBlock = '<div class="match form-panel">'+
                             '<div class="matchup"><h3>'+matchArr[i].team_A+' vs. '+matchArr[i].team_B+'<h3></div>'+
-                            '<div class="team-a team" data-team='+matchArr[i].team_A+'>'+
-                              '<div class="team-name"><h3>'+matchArr[i].team_A+'<h3></div>'+
-                              '<div class="team-logo"><img src="https://cdn.jsdelivr.net/gh/chrisbowerbank/premier-league-predictions/img/'+matchArr[i].team_A_logo+'" /></div>'+
+                            '<div class="team-grid">'+
+                              '<div class="team-a team" data-team='+matchArr[i].team_A+'>'+
+                                '<div class="team-name"><h3>'+matchArr[i].team_A+'<h3></div>'+
+                                '<div class="team-logo"><img src="https://cdn.jsdelivr.net/gh/chrisbowerbank/premier-league-predictions/img/'+matchArr[i].team_A_logo+'" /></div>'+
+                              '</div>'+
+                              '<div class="draw team" data-team="draw"><span class="draw-circle"><h3>Draw</h3></span></div>'+
+                              '<div class="team-a team" data-team='+matchArr[i].team_B+'>'+
+                                '<div class="team-name"><h3>'+matchArr[i].team_B+'<h3></div>'+
+                                '<div class="team-logo"><img src="https://cdn.jsdelivr.net/gh/chrisbowerbank/premier-league-predictions/img/'+matchArr[i].team_B_logo+'" /></div>'+
+                              '</div>'+
                             '</div>'+
-                            '<div class="draw team" data-team="draw"><span class="draw-circle"><h3>Draw</h3></span></div>'+
-                            '<div class="team-a team" data-team='+matchArr[i].team_B+'>'+
-                              '<div class="team-name"><h3>'+matchArr[i].team_B+'<h3></div>'+
-                              '<div class="team-logo"><img src="https://cdn.jsdelivr.net/gh/chrisbowerbank/premier-league-predictions/img/'+matchArr[i].team_B_logo+'" /></div>'+
-                            '</div>'+
+                            '<div class="error">Make a pick to proceed</div>'+
                             '<input type="hidden" name="'+matchArr[i].matchId+'" class="match-pick match-'+[i]+'">'+
                           '</div>';
         $('#match-form').prepend(matchBlock);
@@ -69,6 +72,7 @@ $(function() {
       var currentPanel = $('.form-panel.active').index() + 1;
 
       $('.team').click(function() {
+        $('.form-panel.active').find('.error').slideUp();
         $(this).parents('.match').find('.team.active').removeClass('active');
         $(this).addClass('active');
         var pick = $(this).data('team');
@@ -99,12 +103,14 @@ $(function() {
 
       $('.next-panel').click(function() {
         if ($('.form-panel.active input').val() !== '' && $('.form-panel.active').next('.form-panel').length > 0) {
+
+          $('.form-panel.active').find('.error').slideUp();
           $('.form-panel.active').removeClass('active').next('.form-panel').addClass('active');
           currentPanel = $('.form-panel.active').index() + 1;
           $('.current-panel').text(currentPanel);
           $('.progress-bar').width((currentPanel / totalPanels) * 100+'%');
-
         } else if ($('.form-panel.active input').val() !== '' && $('.form-panel.active').next('.form-panel').length == 0) {
+          $('.form-panel.active').find('.error').slideUp();
           $('.form-panel.active').removeClass('active');
           $('#match-form').addClass('review');
           $('.next-panel').addClass('submit-picks').text('Submit');
@@ -114,8 +120,16 @@ $(function() {
           $('.current-panel').text(totalPanels);
           $('.progress-bar').width('100%');
           $('.submit-picks').click(function() {
-            $('#match-form').submit();
+            var emailRegex = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$");
+            if (emailRegex.test($('#matchpick-email').val()) == true) {
+              $('#match-form').submit();
+            } else {
+              $('.email-input .error').slideDown();
+            }
+
           });
+        } else {
+          $('.form-panel.active').find('.error').slideDown();
         }
       });
       //form send
@@ -128,14 +142,19 @@ $(function() {
           statusCode: { //the status code from the POST request
             0: function(data) { //0 is when Google gives a CORS error, don't worry it went through
               //success
-              $('#form-success').text('hooray!');
+              console.log('success');
+              $('#match-form').addClass('hidden');
+              $('#form-success').addClass('active');
             },
             200: function(data) {//200 is a success code. it went through!
               //success
-              $('#form-success').text('hooray!');
+              console.log('success');
+              $('#match-form').addClass('hidden');
+              $('#form-success').addClass('active');
             },
             403: function(data) {//403 is when something went wrong and the submission didn't go through
               //error
+              console.log('error');
               alert('Oh no! something went wrong. we should check our code to make sure everything matches with Google');
             }
           }

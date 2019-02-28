@@ -11,6 +11,7 @@
 </head>
 <body>
 	<div id="match-form-embed">
+
 		<div class="form-progress">
 			<span class="progress-bar"></span>
 		</div>
@@ -20,22 +21,36 @@
 		<div class="review-display hidden">
 			<h2>Review and Submit</h2>
 		</div>
+		<div id="form-success">
+			<h2>Your picks are in!</h2>
+		</div>
 		<form id="match-form">
 			<div class="form-panel">
 				<!-- username -->
-				<div class="help-text">
-					Use this name to follow your score
+				<div class="text-input">
+					<div class="help-text">
+						Use this name to follow your score
+					</div>
+					<label><h3>Username</h3></label>
+					<input name="entry.956229083" type="text" placeholder="Jose Mourinho" required/>
+					<div class="error">
+						Fill out your username to proceed
+					</div>
 				</div>
-				<label>USERNAME</label>
-				<input name="entry.956229083" type="text" placeholder="Jose Mourinho" required/>
+
 			</div>
 			<div class="form-panel">
 				<!--  email -->
-				<div class="help-text">
-					We'll email your predictions and reminders
+				<div class="text-input email-input">
+					<div class="help-text">
+						We'll email your predictions and reminders
+					</div>
+					<label><h3>Email</h3></label>
+					<input name="entry.1909669248" type="email" placeholder="arsene@invincibles.com" id="matchpick-email" required/>
+					<div class="error">
+						Enter a valid email to proceed
+					</div>
 				</div>
-				<label>EMAIL</label>
-				<input  name="entry.1909669248" type="email" placeholder="arsene@invincibles.com" required/>
 			</div>
 			<!-- Match Week -->
 			<input name="entry.145199381" id="match-week" type='hidden' value=''/>
@@ -44,15 +59,15 @@
 		<div class="form-toggle">
 			<div class="toggle-col left">
 				<div class="prev-panel btn">
-					Back
+					<h3>Back</h3>
 				</div>
 			</div>
 			<div class="toggle-col right">
 				<div class="panel-counter">
-					<h4><span class="current-panel"></span>/<span class="total-panels"></span></h4>
+					<h3><span class="current-panel"></span>/<span class="total-panels"></span></h3>
 				</div>
 				<div class="next-panel btn">
-					Continue
+					<h3>Continue</h3>
 				</div>
 			</div>
 

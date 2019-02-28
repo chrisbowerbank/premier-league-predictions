@@ -11,6 +11,7 @@
 $black: #000;
 $white: #fff;
 $blue: #14bdff;
+$red: #EF0107;
 $small-screen: 568px;
 $medium-screen: 768px;
 
@@ -18,58 +19,29 @@ $medium-screen: 768px;
   position: relative;
 	overflow: hidden;
   &.review {
-    display: flex;
-    flex-flow: row wrap;
-		align-items: center;
+
 		.panel-counter {
 			display: none;
 		}
     .form-panel {
-      width: 50%;
+
 			position: relative;
 			height: auto;
 			opacity: 1;
 			transform: none;
+			padding: 1em 0;
 
-      &.match {
-				justify-content: center;
-
-				@include breakpoint($small-screen) {
-					width: 100%;
-				}
-				.team {
-					vertical-align: middle;
-					width: 33%;
-					display: inline-block;
-					flex: 1;
-					padding: 1em;
-				}
-				.draw {
-					.draw-circle {
-						height: auto;
-						width: auto;
-						border-radius: 2em;
-	        }
-				}
-
-				.team-logo {
-					margin: auto;
-					height: auto;
-					img {
-						max-height: 100%;
-						height: auto;
-						max-width: 100%;
-					}
-				}
-
-      }
     }
   }
   .match {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    text-align: center;
+
+		.team-grid {
+			display: flex;
+	    flex-flow: row nowrap;
+	    align-items: center;
+
+	    text-align: center;
+		}
     .matchup {
       width: 100%;
       text-align: left;
@@ -79,10 +51,10 @@ $medium-screen: 768px;
       text-transform: uppercase;
 			@include transition(color);
 			@include breakpoint($medium-screen) {
-				vertical-align: middle;
+
 				width: 33%;
-				display: inline-block;
-				flex: 1;
+
+				flex: 1 1 auto;
 			}
 			.team-name {
 				padding: 1em;
@@ -150,14 +122,13 @@ $medium-screen: 768px;
           text-transform: uppercase;
 					background-color: $white;
 					color: inherit;
-
+					margin: auto;
 					padding: 0.5em;
 					@include transition(background-color,color,border-color);
 					@include breakpoint($small-screen) {
-						height: auto;
-						width: auto;
-						border-radius: 2em;
-						display: inline-block;
+						height: 50px;
+		        width: 50px;
+						margin: auto;
 					}
         }
         &.active {
@@ -177,6 +148,23 @@ $medium-screen: 768px;
 		height: 0;
 		transform: translateX(-100%);
 		@include transition(transform, opacity);
+		.text-input {
+			label {
+				text-transform: uppercase;
+			}
+			input {
+				border: none;
+				outline: none;
+				background-color: $white;
+				padding: 0.5em;
+			}
+		}
+		.error {
+			display: none;
+			color: $red;
+			font-weight: bold;
+			padding: 1em 0;
+		}
 		&.active {
 			position: relative;
 			opacity: 1;
@@ -186,17 +174,24 @@ $medium-screen: 768px;
 	}
 }
 #match-form-embed {
+	overflow: hidden;
+	min-height: 300px;
+	position: relative;
 	.hidden {
 		display: none !important;
 	}
 	h2,h3,h4 {
 		margin: 0;
+		color: inherit;
 	}
 	.form-toggle {
 		display: flex;
 		width: 100%;
 		align-items: center;
-
+		padding-top: 1em;
+		h3 {
+			font-size: 1em;
+		}
 		.toggle-col {
 
 			&.right {
@@ -206,6 +201,7 @@ $medium-screen: 768px;
 			.panel-counter {
 				display: inline-block;
 				text-align: center;
+
 			}
 		}
 
@@ -224,6 +220,7 @@ $medium-screen: 768px;
 		&:hover {
 			cursor: pointer;
 			background-color: $blue;
+			border-color: $blue;
 			color: $white;
 		}
 	}
@@ -237,6 +234,29 @@ $medium-screen: 768px;
 			background-color: $blue;
 			position: absolute;
 			@include transition(width);
+		}
+	}
+	#form-success {
+		height: 0;
+		opacity: 0;
+		overflow: hidden;
+		transform: translateY(-100%);
+		background-color: $blue;
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: $white;
+		width: 100%;
+		z-index: -1;
+		@include transition(transform,opacity);
+		&.active {
+			height: 100%;
+			opacity: 1;
+			z-index: 10;
+			transform: translateY(0%);
 		}
 	}
 }
