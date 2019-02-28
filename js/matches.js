@@ -13,13 +13,14 @@ $(function() {
   ];
   var matchArr = [];
   $.ajax({
-    url: "https://sheets.googleapis.com/v4/spreadsheets/1Cq-moMhz7MLKnomxK5qMkIXnOdJZi2N3SMcxamjxFKw/values/A2:C1000?key=AIzaSyDXF-TsAl08BQHZUUupA-kE7BEeJ5DRpWM&majorDimension=ROWS",
+    url: "https://sheets.googleapis.com/v4/spreadsheets/1Cq-moMhz7MLKnomxK5qMkIXnOdJZi2N3SMcxamjxFKw/values/A2:E1000?key=AIzaSyDXF-TsAl08BQHZUUupA-kE7BEeJ5DRpWM&majorDimension=ROWS",
     type: "GET",
     success: function(data) {
       var matches = data.values;
       var week = data.values[0][4];
       $('#match-week').val(week);
       $('.week').text(week);
+      console.log(matches);
       $.each(matches,function(i,obj) {
         var teamA = matches[i][0];
         var teamAlogo = matches[i][1];
@@ -34,28 +35,67 @@ $(function() {
         };
         matchArr.push(matchObj);
       });
-      $.each(matchArr,function(i,obj) {
+      console.log(matchArr);
+      $.each(matchArr.reverse(),function(i,obj) {
         var matchBlock = '<div class="match form-panel">'+
-                            '<div class="matchup">'+matchArr[i].team_A+' vs. '+matchArr[i].team_B+'</div>'+
+                            '<div class="matchup"><h3>'+matchArr[i].team_A+' vs. '+matchArr[i].team_B+'<h3></div>'+
                             '<div class="team-a team" data-team='+matchArr[i].team_A+'>'+
                               '<div class="team-name">'+matchArr[i].team_A+'</div>'+
-                              '<div class="team-logo"><img src="https://cdn.jsdelivr.net/gh/chrisbowerbank/premier-league-predictions/img/'+matchArr[i].team_A_logo+'"></div>'+
+                              '<div class="team-logo"><img src="https://cdn.jsdelivr.net/gh/chrisbowerbank/premier-league-predictions/img/'+matchArr[i].team_A_logo+'" /></div>'+
                             '</div>'+
-                            '<div class="draw team">Draw</div>'+
-                            '<div class="team-b team" data-team="">'+matchArr[i].team_B+'</div>'+
+                            '<div class="draw team"><span>Draw</span></div>'+
+                            '<div class="team-a team" data-team='+matchArr[i].team_B+'>'+
+                              '<div class="team-name">'+matchArr[i].team_B+'</div>'+
+                              '<div class="team-logo"><img src="https://cdn.jsdelivr.net/gh/chrisbowerbank/premier-league-predictions/img/'+matchArr[i].team_B_logo+'" /></div>'+
+                            '</div>'+
                             '<input type="hidden" name="'+matchArr[i].matchId+'" class="match-pick match-'+[i]+'">'+
                           '</div>';
         $('#match-form').prepend(matchBlock);
-      });
-      $('.team').click(function() {
 
       });
+      $('.match:first').addClass('active');
+      //pick winner
+      $('.team').click(function() {
+        $(this).parents('.match').find('.team.active').removeClass('active');
+        $(this).addClass('active');
+        var pick = $(this).data('team');
+        $(this).parents('.match').find('.match-pick').val(pick);
+        var $this = $(this);
+        setTimeout(function(){
+          $this.parents('.match').removeClass('active').next('.form-panel').addClass('active');
+          $('.current-panel').text($('.form-panel.active').index() + 1);
+        }, 1000);
+      });
+      //form navigation
+      $('.total-panels').text($('.form-panel').length);
+      $('.current-panel').text($('.form-panel.active').index() + 1);
+      $('.prev-panel').click(function() {
+        if ($('.form-panel.active').prev('.form-panel').length > 0) {
+          $('.form-panel.active').removeClass('active').prev('.form-panel').addClass('active');
+          $('.current-panel').text($('.form-panel.active').index() + 1);
+        }
+      });
+
+      $('.next-panel').click(function() {
+        if ($('.form-panel.active input').val() !== '' && $('.form-panel.active').next('.form-panel').length > 0) {
+          $('.form-panel.active').removeClass('active').next('.form-panel').addClass('active');
+          $('.current-panel').text($('.form-panel.active').index() + 1);
+        } else if ($('.form-panel.active input').val() !== '' && $('.form-panel.active').next('.form-panel').length == 0) {
+          $('.form-panel.active').removeClass('active');
+          $('#match-form').addClass('review');
+          $('.next-panel').addClass('submit-picks').text('Submit');
+          $('.submit-picks').click(function() {
+            $('#match-form').submit();
+          });
+        }
+      });
       //form send
+
       var formID = '1tu32J-pGtFoLui7FNGetTK9CeCGC2AE8EOGbAoAggG0';
       $('#match-form').submit(function(e) {
         e.preventDefault();
         $.ajax({
-          url: 'http://cors.io/?https://docs.google.com/forms/d/1tu32J-pGtFoLui7FNGetTK9CeCGC2AE8EOGbAoAggG0/formResponse',
+          url: 'https://docs.google.com/forms/d/1tu32J-pGtFoLui7FNGetTK9CeCGC2AE8EOGbAoAggG0/formResponse',
           data: $('#match-form').serialize(),
           statusCode: { //the status code from the POST request
             0: function(data) { //0 is when Google gives a CORS error, don't worry it went through

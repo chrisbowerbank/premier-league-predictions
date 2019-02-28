@@ -10,43 +10,54 @@
 	<script src="//localhost:35729/livereload.js"></script>
 </head>
 <body>
-	<form id="match-form">
+	<div id="match-form-embed">
 		<div class="form-progress">
-
 		</div>
 		<div>
 			Matchweek <span class="week"></span>
 		</div>
-		<div class="form-panel">
-			<!-- username -->
-			<div class="help-text">
-				Use this name to follow your score
-			</div>
-			<label>USERNAME</label>
-			<input class="fs-anim-lower" id="q11" name="entry.956229083" type="text" placeholder="Jose Mourinho" required/>
+		<div class="review">
+			Review and Submit
 		</div>
-		<div class="form-panel">
-			<!--  email -->
-			<div class="help-text">
-				We'll email your predictions and reminders
+		<form id="match-form">
+			<div class="form-panel">
+				<!-- username -->
+				<div class="help-text">
+					Use this name to follow your score
+				</div>
+				<label>USERNAME</label>
+				<input name="entry.956229083" type="text" placeholder="Jose Mourinho" required/>
 			</div>
-			<label>EMAIL</label>
-			<input class="fs-anim-lower" id="q12" name="entry.1909669248" type="email" placeholder="arsene@invincibles.com" required/>
-		</div>
-		<!-- Match Week -->
-		<input name="entry.145199381" id="match-week" type='hidden' value=''/>
+			<div class="form-panel">
+				<!--  email -->
+				<div class="help-text">
+					We'll email your predictions and reminders
+				</div>
+				<label>EMAIL</label>
+				<input  name="entry.1909669248" type="email" placeholder="arsene@invincibles.com" required/>
+			</div>
+			<!-- Match Week -->
+			<input name="entry.145199381" id="match-week" type='hidden' value=''/>
+
+		</form>
 		<div class="form-toggle">
-			<div class="prev-panel">
-				Back
+			<div class="toggle-col left">
+				<div class="prev-panel btn">
+					Back
+				</div>
 			</div>
-			<div class="panel-counter">
-				<span class="current-panel"></span>/<span class="total-panels"></span>
+			<div class="toggle-col right">
+				<div class="panel-counter">
+					<span class="current-panel"></span>/<span class="total-panels"></span>
+				</div>
+				<div class="next-panel btn">
+					Continue
+				</div>
 			</div>
-			<div class="next-panel btn">
-				Continue
-			</div>
+
 		</div>
-	</form>
+	</div>
+
 	<script src="js/matches.js"></script>
 
 </body>

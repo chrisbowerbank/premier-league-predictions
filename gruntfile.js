@@ -70,8 +70,11 @@ module.exports = function(grunt) {
       options: {
         livereload: true
       },
+      html: {
+        files: 'index.html',
+      },
       uglify: {
-        files: ['js/src/*.js'],
+        files: ['js/*.js'],
         tasks: ['newer:uglify:target']
       },
       sass: {
