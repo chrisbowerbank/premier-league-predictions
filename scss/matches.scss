@@ -42,6 +42,7 @@ $medium-screen: 768px;
 					width: 33%;
 					display: inline-block;
 					flex: 1;
+					padding: 1em;
 				}
 				.draw {
 					.draw-circle {
@@ -138,8 +139,8 @@ $medium-screen: 768px;
 				top: 1.5rem;
 				text-align: center;
         .draw-circle {
-					height: 150px;
-	        width: 150px;
+					height: 100px;
+	        width: 100px;
 					border-radius: 50%;
 	        border: 2px solid #000;
 					display: flex;
@@ -185,6 +186,9 @@ $medium-screen: 768px;
 	}
 }
 #match-form-embed {
+	.hidden {
+		display: none !important;
+	}
 	h2,h3,h4 {
 		margin: 0;
 	}
