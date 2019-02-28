@@ -84,6 +84,8 @@ $(function() {
           $('.form-panel.active').removeClass('active');
           $('#match-form').addClass('review');
           $('.next-panel').addClass('submit-picks').text('Submit');
+          $('.review-display').removeClass('hidden');
+          $('.matchweek-display').addClass('hidden');
           $('.submit-picks').click(function() {
             $('#match-form').submit();
           });

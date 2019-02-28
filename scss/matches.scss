@@ -1,12 +1,19 @@
-
 @mixin transition($prop...) {
 	transition-property: $prop;
 	transition-duration: 0.3s;
 	transition-timing-function: ease;
 }
+@mixin breakpoint($size) {
+	@media only screen and (max-width: $size) {
+    @content;
+  }
+}
 $black: #000;
 $white: #fff;
 $green: green;
+$small-screen: 568px;
+$medium-screen: 768px;
+
 #match-form {
   position: relative;
 	overflow: hidden;
@@ -23,22 +30,45 @@ $green: green;
 			height: auto;
 			opacity: 1;
 			transform: none;
+
       &.match {
-				//display: block;
-				.team,.draw {
-					//display: inline-block;
-					vertical-align: middle;
+				@include breakpoint($small-screen) {
+					justify-content: center;
+					width: 100%;
 				}
-        .team-logo, .draw {
-					height: 100px;
-					width: 100px;
+				.team {
+					vertical-align: middle;
+					width: 33%;
+					display: inline-block;
+
+				}
+        .draw {
+					height: auto;
+					width: auto;
+					border-radius: 0;
+					max-width: 100%;
+					padding: 0.5rem;
+					margin: 0 1rem;
+					position: relative;
+					top: 1.5rem;
+					@include breakpoint($small-screen) {
+						//top: 0;
+						text-align: center;
+					}
+					span {
+						font-size: 1rem;
+					}
         }
 				.team-logo {
 					margin: auto;
+					height: auto;
+					img {
+						max-height: 100%;
+						height: auto;
+						max-width: 100%;
+					}
 				}
-				.draw {
-					font-size: 1em;
-				}
+
       }
     }
   }
@@ -73,6 +103,8 @@ $green: green;
       .team-logo {
         height: 200px;
 				position: relative;
+				opacity: 0.5;
+				@include transition(opacity);
         img {
           z-index: 2;
           height: 100%;
@@ -80,18 +112,7 @@ $green: green;
           display: block;
           margin: auto;
         }
-				&:before {
-					content: '';
-					position: absolute;
-					height: 100%;
-					width: 100%;
-					left: 0;
-					top: 0;
-					z-index: 2;
-					opacity: 0.5;
-					@include transition(opacity);
-					background-color: $white;
-				}
+
       }
       &.active {
 				color: #fff;
@@ -101,10 +122,7 @@ $green: green;
 					}
 				}
 				.team-logo {
-					&:before {
-						opacity: 0;
-					}
-
+					opacity: 1;
 				}
 
       }
@@ -163,7 +181,8 @@ $green: green;
 
 	}
 	.btn {
-		border-radius: 3px;
+		border-radius: 2em;
+		text-transform: uppercase;
 		border: 2px solid black;
 		display: inline-block;
 		text-align: center;
