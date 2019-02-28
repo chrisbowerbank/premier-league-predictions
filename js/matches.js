@@ -40,12 +40,12 @@ $(function() {
         var matchBlock = '<div class="match form-panel">'+
                             '<div class="matchup"><h3>'+matchArr[i].team_A+' vs. '+matchArr[i].team_B+'<h3></div>'+
                             '<div class="team-a team" data-team='+matchArr[i].team_A+'>'+
-                              '<div class="team-name">'+matchArr[i].team_A+'</div>'+
+                              '<div class="team-name"><h3>'+matchArr[i].team_A+'<h3></div>'+
                               '<div class="team-logo"><img src="https://cdn.jsdelivr.net/gh/chrisbowerbank/premier-league-predictions/img/'+matchArr[i].team_A_logo+'" /></div>'+
                             '</div>'+
-                            '<div class="draw team" data-team="draw"><span>Draw</span></div>'+
+                            '<div class="draw team" data-team="draw"><span class="draw-circle"><h3>Draw</h3></span></div>'+
                             '<div class="team-a team" data-team='+matchArr[i].team_B+'>'+
-                              '<div class="team-name">'+matchArr[i].team_B+'</div>'+
+                              '<div class="team-name"><h3>'+matchArr[i].team_B+'<h3></div>'+
                               '<div class="team-logo"><img src="https://cdn.jsdelivr.net/gh/chrisbowerbank/premier-league-predictions/img/'+matchArr[i].team_B_logo+'" /></div>'+
                             '</div>'+
                             '<input type="hidden" name="'+matchArr[i].matchId+'" class="match-pick match-'+[i]+'">'+
