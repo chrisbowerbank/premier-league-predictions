@@ -3,7 +3,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     sass: {
       options: {
-        // style: 'compressed',
+        style: 'compressed',
         sourcemap: 'none'
       },
       target: {
@@ -23,7 +23,7 @@ module.exports = function(grunt) {
           require('autoprefixer')({
             browsers: 'last 2 versions'
           }),
-          // require('cssnano')()
+          require('cssnano')()
         ]
       },
       target: {

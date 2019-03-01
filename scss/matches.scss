@@ -178,6 +178,7 @@ $medium-screen: 768px;
 	overflow: hidden;
 	min-height: 300px;
 	position: relative;
+	display: inline-block;
 	.hidden {
 		display: none !important;
 	}
