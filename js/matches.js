@@ -52,12 +52,12 @@ $(function() {
                             '<div class="team-grid">'+
                               '<div class="team-a team" data-team='+matchArr[i].team_A+'>'+
                                 '<div class="team-name"><h3>'+matchArr[i].team_A+'<h3></div>'+
-                                '<div class="team-logo"><img src="https://cdn.jsdelivr.net/gh/chrisbowerbank/premier-league-predictions/img/'+matchArr[i].team_A_logo+'" /></div>'+
+                                '<div class="team-logo"><img src="'+matchArr[i].team_A_logo+'" /></div>'+
                               '</div>'+
                               '<div class="draw team" data-team="draw"><span class="draw-circle"><h3>Draw</h3></span></div>'+
                               '<div class="team-a team" data-team='+matchArr[i].team_B+'>'+
                                 '<div class="team-name"><h3>'+matchArr[i].team_B+'<h3></div>'+
-                                '<div class="team-logo"><img src="https://cdn.jsdelivr.net/gh/chrisbowerbank/premier-league-predictions/img/'+matchArr[i].team_B_logo+'" /></div>'+
+                                '<div class="team-logo"><img src="'+matchArr[i].team_B_logo+'" /></div>'+
                               '</div>'+
                             '</div>'+
                             '<div class="error">Make a pick to proceed</div>'+
