@@ -51,12 +51,10 @@ $(function() {
                             '<div class="matchup"><h3>'+matchArr[i].team_A+' vs. '+matchArr[i].team_B+'<h3></div>'+
                             '<div class="team-grid">'+
                               '<div class="team-a team" data-team='+matchArr[i].team_A+'>'+
-                                '<div class="team-name"><h3>'+matchArr[i].team_A+'<h3></div>'+
                                 '<div class="team-logo"><img src="'+matchArr[i].team_A_logo+'" /></div>'+
                               '</div>'+
-                              '<div class="draw team" data-team="draw"><span class="draw-circle"><h3>Draw</h3></span></div>'+
+                              '<div class="draw team" data-team="draw"><div class="team-logo"><img src="https://chrisbowerbank.github.io/premier-league-predictions/img/draw.png" /></div></div>'+
                               '<div class="team-a team" data-team='+matchArr[i].team_B+'>'+
-                                '<div class="team-name"><h3>'+matchArr[i].team_B+'<h3></div>'+
                                 '<div class="team-logo"><img src="'+matchArr[i].team_B_logo+'" /></div>'+
                               '</div>'+
                             '</div>'+
@@ -68,7 +66,7 @@ $(function() {
       });
       $('.match:first').addClass('active');
       //pick winner
-      var totalPanels = $('.form-panel').length + 1;
+      var totalPanels = $('.form-panel').length;
       var currentPanel = $('.form-panel.active').index() + 1;
 
       $('.team').click(function() {
@@ -82,7 +80,7 @@ $(function() {
           $this.parents('.match').removeClass('active').next('.form-panel').addClass('active');
           currentPanel = $('.form-panel.active').index() + 1;
           $('.current-panel').text(currentPanel);
-          $('.progress-bar').width((currentPanel / totalPanels) * 100+'%');
+
         }, 1000);
       });
       //form navigation
@@ -94,7 +92,7 @@ $(function() {
           $('.form-panel.active').removeClass('active').prev('.form-panel').addClass('active');
           currentPanel = $('.form-panel.active').index() + 1;
           $('.current-panel').text(currentPanel);
-          $('.progress-bar').width((currentPanel / totalPanels) * 100+'%');
+
           if ($('.form-panel.active').next('.form-panel').length == 0) {
             $('#match-form').removeClass('review');
           }
@@ -108,12 +106,12 @@ $(function() {
           $('.form-panel.active').removeClass('active').next('.form-panel').addClass('active');
           currentPanel = $('.form-panel.active').index() + 1;
           $('.current-panel').text(currentPanel);
-          $('.progress-bar').width((currentPanel / totalPanels) * 100+'%');
+
         } else if ($('.form-panel.active input').val() !== '' && $('.form-panel.active').next('.form-panel').length == 0) {
           $('.form-panel.active').find('.error').slideUp();
           $('.form-panel.active').removeClass('active');
           $('#match-form').addClass('review');
-          $('.next-panel').addClass('submit-picks').text('Submit');
+          $('.next-panel').addClass('submit-picks').html('<h3>Submit</h3>');
           $('.review-display').removeClass('hidden');
           $('.matchweek-display').addClass('hidden');
           currentPanel = $('.form-panel.active').index() + 1;
