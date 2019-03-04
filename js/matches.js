@@ -80,8 +80,7 @@ $(function() {
           $this.parents('.match').removeClass('active').next('.form-panel').addClass('active');
           currentPanel = $('.form-panel.active').index() + 1;
           $('.current-panel').text(currentPanel);
-
-        }, 1000);
+        }, 500);
       });
       //form navigation
       $('.total-panels').text(totalPanels);
