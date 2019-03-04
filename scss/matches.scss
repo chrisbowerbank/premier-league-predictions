@@ -16,6 +16,7 @@ $black: #000;
 $white: #fff;
 $blue: #14bdff;
 $red: #EF0107;
+$light_gray: rgba(0,0,0,0.2);
 $small-screen: 568px;
 $medium-screen: 768px;
 
@@ -23,18 +24,21 @@ $medium-screen: 768px;
   position: relative;
 	overflow: hidden;
   &.review {
-
 		.panel-counter {
 			display: none;
 		}
     .form-panel {
-
 			position: relative;
 			height: auto;
 			opacity: 1;
 			transform: none;
-			padding: 1em 0;
-
+			padding: 3em 0;
+			border-bottom: 2px solid $light_gray;
+			.text-input {
+				input {
+					border-bottom: none;
+				}
+			}
     }
   }
   .match {
@@ -128,9 +132,12 @@ $medium-screen: 768px;
 				border: none;
 				outline: none;
 				background-color: transparent;
-				border-bottom: 2px solid gray;
+				border-bottom: 2px solid $light_gray;
 				font-size: 2em;
 				padding: 0.5em;
+				&::placeholder {
+					color: $light_gray;
+				}
 			}
 		}
 		.error {
@@ -174,6 +181,7 @@ $medium-screen: 768px;
 			&.right {
 				text-align: right;
 				flex: 1;
+				padding-left: 1em;
 			}
 			.panel-counter {
 				display: inline-block;
@@ -217,14 +225,14 @@ $medium-screen: 768px;
 		opacity: 0;
 		overflow: hidden;
 		transform: translateY(-100%);
-		background-color: $blue;
-		position: absolute;
+
+		background-color: transparent;
 		top: 0;
 		left: 0;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		color: $white;
+		color: $black;
 		width: 100%;
 		z-index: -1;
 		@include transition(transform,opacity);
@@ -232,6 +240,7 @@ $medium-screen: 768px;
 			height: 100%;
 			opacity: 1;
 			z-index: 10;
+			padding: 2em;
 			transform: translateY(0%);
 		}
 	}

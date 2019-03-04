@@ -84,7 +84,6 @@ $(function() {
         }, 1000);
       });
       //form navigation
-
       $('.total-panels').text(totalPanels);
       $('.current-panel').text(currentPanel);
       $('.prev-panel').click(function() {
@@ -110,6 +109,7 @@ $(function() {
         } else if ($('.form-panel.active input').val() !== '' && $('.form-panel.active').next('.form-panel').length == 0) {
           $('.form-panel.active').find('.error').slideUp();
           $('.form-panel.active').removeClass('active');
+          $('.prev-panel').addClass('hidden');
           $('#match-form').addClass('review');
           $('.next-panel').addClass('submit-picks').html('<h3>Submit</h3>');
           $('.review-display').removeClass('hidden');
@@ -130,6 +130,11 @@ $(function() {
           $('.form-panel.active').find('.error').slideDown();
         }
       });
+      $('.text-input input').keypress(function(event){
+        if(event.keyCode == 13){
+          $('.next-panel').click();
+        }
+      });
       //form send
       var formID = '1tu32J-pGtFoLui7FNGetTK9CeCGC2AE8EOGbAoAggG0';
       $('#match-form').submit(function(e) {
@@ -141,13 +146,13 @@ $(function() {
             0: function(data) { //0 is when Google gives a CORS error, don't worry it went through
               //success
               console.log('success');
-              $('#match-form').addClass('hidden');
+              $('#match-form, .match-week-display, .review-display, .form-toggle').addClass('hidden');
               $('#form-success').addClass('active');
             },
             200: function(data) {//200 is a success code. it went through!
               //success
               console.log('success');
-              $('#match-form').addClass('hidden');
+              $('#match-form, .match-week-display, .review-display, .form-toggle').addClass('hidden');
               $('#form-success').addClass('active');
             },
             403: function(data) {//403 is when something went wrong and the submission didn't go through
