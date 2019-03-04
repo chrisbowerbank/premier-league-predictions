@@ -47,7 +47,7 @@ $medium-screen: 768px;
 			display: flex;
 	    flex-flow: row nowrap;
 	    align-items: center;
-
+			padding: 1em 0;
 	    text-align: center;
 		}
     .matchup {
@@ -135,6 +135,7 @@ $medium-screen: 768px;
 				border-bottom: 2px solid $light_gray;
 				font-size: 2em;
 				padding: 0.5em;
+				font-weight: bold;
 				&::placeholder {
 					color: $light_gray;
 				}
