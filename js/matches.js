@@ -108,11 +108,11 @@ $(function() {
         } else if ($('.form-panel.active input').val() !== '' && $('.form-panel.active').next('.form-panel').length == 0) {
           $('.form-panel.active').find('.error').slideUp();
           $('.form-panel.active').removeClass('active');
-          $('.prev-panel').addClass('hidden');
+          $('.prev-panel, .matchweek-display, .panel-counter').addClass('hidden');
           $('#match-form').addClass('review');
           $('.next-panel').addClass('submit-picks').html('<h3>Submit</h3>');
           $('.review-display').removeClass('hidden');
-          $('.matchweek-display').addClass('hidden');
+
           currentPanel = $('.form-panel.active').index() + 1;
           $('.current-panel').text(totalPanels);
           $('.progress-bar').width('100%');
@@ -147,12 +147,18 @@ $(function() {
               console.log('success');
               $('#match-form, .match-week-display, .review-display, .form-toggle').addClass('hidden');
               $('#form-success').addClass('active');
+              $('html').animate({
+                scrollTop: $('#predictions').offset().top
+              });
             },
             200: function(data) {//200 is a success code. it went through!
               //success
               console.log('success');
               $('#match-form, .match-week-display, .review-display, .form-toggle').addClass('hidden');
               $('#form-success').addClass('active');
+              $('html').animate({
+                scrollTop: $('#predictions').offset().top
+              });
             },
             403: function(data) {//403 is when something went wrong and the submission didn't go through
               //error
