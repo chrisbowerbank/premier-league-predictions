@@ -22,49 +22,52 @@ $(function() {
     "entry.108046031"
   ];
   var matchArr = [];
+
   $.ajax({
     url: "https://sheets.googleapis.com/v4/spreadsheets/1Cq-moMhz7MLKnomxK5qMkIXnOdJZi2N3SMcxamjxFKw/values/A2:E1000?key=AIzaSyDXF-TsAl08BQHZUUupA-kE7BEeJ5DRpWM&majorDimension=ROWS",
     type: "GET",
     success: function(data) {
-      var matches = data.values;
-      var week = data.values[0][4];
-      $('#match-week').val(week);
-      $('.week').text(week);
-      console.log(matches);
-      $.each(matches,function(i,obj) {
-        var teamA = matches[i][0];
-        var teamAlogo = matches[i][1];
-        var teamB = matches[i][2];
-        var teamBlogo = matches[i][3];
-        var matchObj = {
-          "team_A": teamA,
-          "team_A_logo": teamAlogo,
-          "team_B": teamB,
-          "team_B_logo": teamBlogo,
-          "matchId": matchIds[i]
-        };
-        matchArr.push(matchObj);
-      });
-      console.log(matchArr);
-      $.each(matchArr.reverse(),function(i,obj) {
-        var matchBlock = '<div class="match form-panel">'+
-                            '<div class="matchup"><h3>'+matchArr[i].team_A+' vs. '+matchArr[i].team_B+'<h3></div>'+
-                            '<div class="team-grid">'+
-                              '<div class="team-a team" data-team='+matchArr[i].team_A+'>'+
-                                '<div class="team-logo"><img src="'+matchArr[i].team_A_logo+'" /></div>'+
+      if (data.values == undefined) {
+        $('.user-panel').addClass('active');
+      } else {
+        var matches = data.values;
+        var week = data.values[0][4];
+        $('#match-week').val(week);
+        $('.week').text(week);
+        $.each(matches,function(i,obj) {
+          var teamA = matches[i][0];
+          var teamAlogo = matches[i][1];
+          var teamB = matches[i][2];
+          var teamBlogo = matches[i][3];
+          var matchObj = {
+            "team_A": teamA,
+            "team_A_logo": teamAlogo,
+            "team_B": teamB,
+            "team_B_logo": teamBlogo,
+            "matchId": matchIds[i]
+          };
+          matchArr.push(matchObj);
+        });
+        $.each(matchArr.reverse(),function(i,obj) {
+          var matchBlock = '<div class="match form-panel">'+
+                              '<div class="matchup"><h3>'+matchArr[i].team_A+' vs. '+matchArr[i].team_B+'<h3></div>'+
+                              '<div class="team-grid">'+
+                                '<div class="team-a team" data-team='+matchArr[i].team_A+'>'+
+                                  '<div class="team-logo"><img src="'+matchArr[i].team_A_logo+'" /></div>'+
+                                '</div>'+
+                                '<div class="draw team" data-team="draw"><div class="team-logo"><img src="https://chrisbowerbank.github.io/premier-league-predictions/img/draw.png" /></div></div>'+
+                                '<div class="team-a team" data-team='+matchArr[i].team_B+'>'+
+                                  '<div class="team-logo"><img src="'+matchArr[i].team_B_logo+'" /></div>'+
+                                '</div>'+
                               '</div>'+
-                              '<div class="draw team" data-team="draw"><div class="team-logo"><img src="https://chrisbowerbank.github.io/premier-league-predictions/img/draw.png" /></div></div>'+
-                              '<div class="team-a team" data-team='+matchArr[i].team_B+'>'+
-                                '<div class="team-logo"><img src="'+matchArr[i].team_B_logo+'" /></div>'+
-                              '</div>'+
-                            '</div>'+
-                            '<div class="error">Make a pick to proceed</div>'+
-                            '<input type="hidden" name="'+matchArr[i].matchId+'" class="match-pick match-'+[i]+'">'+
-                          '</div>';
-        $('#match-form').prepend(matchBlock);
-
-      });
+                              '<div class="error">Make a pick to proceed</div>'+
+                              '<input type="hidden" name="'+matchArr[i].matchId+'" class="match-pick match-'+[i]+'">'+
+                            '</div>';
+          $('#match-form').prepend(matchBlock);
+        });
+      }
       $('.match:first').addClass('active');
+
       //pick winner
       var totalPanels = $('.form-panel').length;
       var currentPanel = $('.form-panel.active').index() + 1;
@@ -141,8 +144,8 @@ $(function() {
         $.ajax({
           url: 'https://docs.google.com/forms/d/1tu32J-pGtFoLui7FNGetTK9CeCGC2AE8EOGbAoAggG0/formResponse',
           data: $('#match-form').serialize(),
-          statusCode: { //the status code from the POST request
-            0: function(data) { //0 is when Google gives a CORS error, don't worry it went through
+          statusCode: {
+            0: function(data) {
               //success
               console.log('success');
               $('#match-form, .match-week-display, .review-display, .form-toggle').addClass('hidden');
@@ -151,7 +154,7 @@ $(function() {
                 scrollTop: $('#predictions').offset().top
               });
             },
-            200: function(data) {//200 is a success code. it went through!
+            200: function(data) {
               //success
               console.log('success');
               $('#match-form, .match-week-display, .review-display, .form-toggle').addClass('hidden');
@@ -160,14 +163,15 @@ $(function() {
                 scrollTop: $('#predictions').offset().top
               });
             },
-            403: function(data) {//403 is when something went wrong and the submission didn't go through
+            403: function(data) {
               //error
-              console.log('error');
-              alert('Oh no! something went wrong. we should check our code to make sure everything matches with Google');
+
+
             }
           }
         });
       });
+      $('#match-form-embed').append('<a href="https://edcupaioli.com" target="_blank" class="copyright">Made by Ed Cupaioli</a>');
     }, error: function(data) {
       console.log(data);
     }

@@ -168,6 +168,13 @@ $medium-screen: 768px;
 	h2,h3,h4 {
 		margin: 0;
 	}
+	a.copyright {
+		margin-top: 1rem;
+		color: $light_gray;
+		font-weight: bold;
+		display: inline-block;
+		text-decoration: none;
+	}
 	.form-toggle {
 		display: flex;
 		width: 100%;
@@ -207,6 +214,9 @@ $medium-screen: 768px;
 			background-color: $blue;
 			border-color: $blue;
 			color: $white;
+			h3 {
+				color: inherit;
+			}
 		}
 	}
 	.form-progress {
