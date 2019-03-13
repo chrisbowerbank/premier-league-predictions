@@ -171,7 +171,7 @@ $(function() {
           }
         });
       });
-      $('#match-form-embed').append('<a href="https://edcupaioli.com" target="_blank" class="copyright">Made by Ed Cupaioli</a>');
+      $('#match-form-embed').append('');
     }, error: function(data) {
       console.log(data);
     }
